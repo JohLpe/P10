@@ -7,7 +7,7 @@ branches:
     - staging
   
 addons:
-  postgresql: "14"
+  postgresql: "12"
 
 env: DJANGO_SETTINGS_MODULE="settings.travis"
 
@@ -17,8 +17,6 @@ services:
 before_script:
   - pip install -r requirements.txt
   - psql -c 'create database travis_ci_test;' -U postgres
-  - python manage.py makemigrations
-  - python manage.py migrate
 
 script:
   - python manage.py test
