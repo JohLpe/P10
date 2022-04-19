@@ -6,7 +6,7 @@ branches:
   only:
     - staging
 
-env: DJANGO_SETTINGS_MODULE="P10.settings"
+env: DJANGO_SETTINGS_MODULE="settings.travis"
 
 services:
   - postgresql
