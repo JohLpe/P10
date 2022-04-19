@@ -5,6 +5,9 @@ python:
 branches:
   only:
     - staging
+  
+addons:
+  postgresql: "14"
 
 env: DJANGO_SETTINGS_MODULE="settings.travis"
 
