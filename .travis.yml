@@ -14,6 +14,7 @@ services:
 before_script:
   - pip install -r requirements.txt
   - psql -c 'create database travis_ci_test;' -U postgres
+  - python manage.py migrate
 
 script:
   - python manage.py test
