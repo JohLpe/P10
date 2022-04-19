@@ -13,7 +13,11 @@ addons:
       - postgresql-12
       - postgresql-client-12
 
-env: DJANGO_SETTINGS_MODULE="settings.travis"
+env:
+- DJANGO_SETTINGS_MODULE="settings.travis"
+  global:
+    - PGPORT=5433
+    - PGUSER=travis
 
 services:
   - postgresql
