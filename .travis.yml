@@ -20,7 +20,6 @@ services:
 
 before_script:
   - pip install -r requirements.txt
-  - psql -c 'create database travis_ci_test;' -U travis
 
 script:
   - python manage.py test
