@@ -6,13 +6,28 @@ branches:
   only:
     - travisstaging
 
-before_script:
-  - pip install -r requirements.txt
-
-env: DJANGO_SETTINGS_MODULE="purbeurre.settings"
-
 services:
   - postgresql
 
+addons:
+  chrome: stable
+  postgresql: "10"
+  apt:
+    packages:
+    - postgresql-10
+    - postgresql-client-10
+env:
+  global:
+  - PGPORT=5432
+  - PGUSER=postgres
+
+before-install:
+  - google-chrome-stable --headless --disable-gpu --remote-debugging-port=8000 http://localhost &
+  ⋮
+
+before_script:
+  - psql -c 'CREATE DATABASE travis_db_test;' -U postgres
+
 script:
-  - ./manage.py test
+  - python3 manage.py migrate
+  - python3 manage.py test
