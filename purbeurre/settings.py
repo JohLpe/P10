@@ -83,11 +83,11 @@ WSGI_APPLICATION = 'purbeurre.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'projet8',
-        'USER': 'projet8user',
-        'PASSWORD': '0000',
-        'HOST': 'localhost',
-        'PORT': '5432'
+        'NAME': os.getenv("DB_NAME_DEFAULT"),
+        'USER': os.getenv("DB_USER_DEFAULT"),
+        'PASSWORD': os.getenv("DB_PSSWRD_DEFAULT"),
+        'HOST': os.getenv("DB_HOST_DEFAULT"),
+        'PORT': os.getenv("DB_PORT_DEFAULT")
     }
 }
 
