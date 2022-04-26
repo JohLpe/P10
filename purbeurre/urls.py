@@ -21,10 +21,16 @@ handler404 = 'purbeurre.views.error_404'
 
 handler500 = 'purbeurre.views.error_500'
 
+
+def trigger_error(request):
+    division_by_zero = 1 / 0
+
+
 urlpatterns = [
     path('', views.index, name='homepage'),
     path('mentions/', views.mentions, name='legalmentions'),
     path('admin/', admin.site.urls),
     path('products/', include('products.urls')),
     path('registration/', include('registration.urls')),
+    path('sentry-debug/', trigger_error),
 ]
