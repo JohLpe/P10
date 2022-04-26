@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_crontab',
 ]
 
 MIDDLEWARE = [
@@ -155,4 +156,6 @@ sentry_sdk.init(
     send_default_pii=True
 )
 
-django_heroku.settings(locals())
+CRONJOBS = [
+    ('*/2 * * * *', 'products.cron.test_cron')
+]
