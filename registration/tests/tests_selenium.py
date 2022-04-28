@@ -1,7 +1,7 @@
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium import webdriver
-from selenium.webdriver.chrome.service import Service as ChromeService
+from selenium.webdriver import ChromeOptions
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as cond
 from selenium.webdriver.common.by import By
@@ -10,14 +10,17 @@ from selenium.webdriver.common.by import By
 class RegistrationPage(StaticLiveServerTestCase):
 
     def setUp(self):
-        self.service = ChromeService(
-                        executable_path=ChromeDriverManager().install())
-        self.driver = webdriver.Chrome(service=self.service)
-        self.wait = WebDriverWait(self.driver, 1000)
+        opts = ChromeOptions()
+        opts.add_argument("--headless")
+        self.driver = webdriver.Chrome(executable_path=ChromeDriverManager().install(),
+                                       chrome_options=opts)
+        self.wait = WebDriverWait(self.driver, 30)
 
     def test_registration_page(self):
 
         self.driver.get(self.live_server_url + "/registration/")
+
+        self.wait.until(cond.presence_of_all_elements_located)
 
         self.driver.find_element(By.XPATH,
                                  '//*[@id="id_username"]'
