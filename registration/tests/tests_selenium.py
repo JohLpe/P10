@@ -1,25 +1,28 @@
-import unittest
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium import webdriver
+from selenium.webdriver import ChromeOptions
 from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as cond
 from selenium.webdriver.common.by import By
 
 
-class RegistrationPage(unittest.TestCase):
+class RegistrationPage(StaticLiveServerTestCase):
 
     def setUp(self):
-
-        self.service = ChromeService(executable_path=ChromeDriverManager().install())
+        self.service = ChromeService(
+                        executable_path=ChromeDriverManager().install())
         self.driver = webdriver.Chrome(service=self.service)
-        self.driver.get("http://127.0.0.1:8000/registration/")
+        self.wait = WebDriverWait(self.driver, 1000)
 
     def test_registration_page(self):
 
+        self.driver.get(self.live_server_url + "/registration/")
+
         self.driver.find_element(By.XPATH,
                                  '//*[@id="id_username"]'
-                                 ).send_keys("TestUsername")
+                                 ).send_keys("TestFirstname")
 
         self.driver.find_element(By.XPATH,
                                  '//*[@id="id_first_name"]'
@@ -44,11 +47,10 @@ class RegistrationPage(unittest.TestCase):
         self.driver.find_element(By.XPATH,
                                  '//*[@id="registration-form"]/input[2]'
                                  ).click()
-        WebDriverWait(self.driver, 5).until(cond.url_changes("http://127.0.0.1:8000/registration/login/"))
+        self.wait.until(cond.url_changes)
+
+        assert self.driver.current_url == self.live_server_url +\
+            "/registration/login/"
 
     def tearDown(self):
         self.driver.close()
-
-
-if __name__ == "__main__":
-    unittest.main()
