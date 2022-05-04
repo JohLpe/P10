@@ -18,7 +18,7 @@ class Product(models.Model):
     product_name = models.CharField(max_length=200)
     nutriscore = models.CharField(max_length=1)
     nutri_values = models.TextField()
-    off_url = models.URLField(max_length=150)
+    off_url = models.URLField(max_length=150, unique=True)
     img_url = models.URLField(max_length=150)
 
     def __str__(self):
